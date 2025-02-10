@@ -12,8 +12,8 @@ const {title,description}=req.body;
 // create a new TOdo obj and insert in Db
 
 const response=await Todo.create({title,description});
-// send a json reponse with a success flag
 
+// send a json reponse with a success flag
 res.status(200).json(
     {
         success:true,
