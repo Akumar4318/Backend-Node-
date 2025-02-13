@@ -7,7 +7,7 @@ const commnetSchema=new mongoose.Schema({
 
     post:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"post"
+        ref:"Post"
     },
     //kis user ne commnet kiya hai
     user:{
@@ -26,4 +26,4 @@ const commnetSchema=new mongoose.Schema({
 // export
 
 
-module.exports=mongoose.model("commnet",commnetSchema)
+module.exports=mongoose.model("Commnets",commnetSchema)
