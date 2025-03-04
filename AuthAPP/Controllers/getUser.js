@@ -18,7 +18,7 @@ exports.getUser=async (req,res)=>{
         return res.status(500).json({
             success:false,
             message:"failed",
-            data:erorr
+            data:error
         })
     }
 }

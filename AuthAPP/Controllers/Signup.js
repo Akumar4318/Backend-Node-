@@ -1,6 +1,7 @@
 const User=require('../Models/usersSchema')
 const bcrypt=require("bcrypt")
-
+require("dotenv").config()
+const jwt=require("jsonwebtoken")
 
 exports.signUp=async (req,res)=>{
 
@@ -58,6 +59,75 @@ exports.signUp=async (req,res)=>{
             success:false,
             message:"user cannot be registered please try again later ",
             data:error
+        })
+    }
+}
+
+exports.Login=async (req,res)=>{
+
+
+    try {
+        
+        const {email,password}=req.body
+
+        if(!email || !password){
+
+            return res.status(400).json({
+                success:false,
+                message:"Please enter the email and password"
+            })
+        }
+
+        // check for register user
+
+        let user=await User.findOne({email})
+
+        if(!user){
+          return   res.status(401).json({
+                success:false,
+                message:"user not found"
+             })
+        }
+// verify the password and generate a jwt token
+
+const payload={
+    email:user.email,
+    id:user._id,
+    role:user.role
+}
+
+if(await bcrypt.compare(password,user.password)){
+    let token =jwt.sign(payload,process.env.JWT_SECRET,{
+        expiresIn:"2h"
+    });
+
+    user=user.toObject();
+    user.password=undefined;
+    user.token=token;
+    const option ={
+        expires:new Date(Date.now()+3*24*60*60*1000),httpOnly:true,
+    }
+
+    res.cookie("aman ",token,option).status(200).json({
+        success:true,
+        token,
+        user,
+        message:"User loged in successfully"
+    })
+}
+else{
+    return res.status(403).json({
+        success:false,
+        message:"password incorrect"
+    })
+}
+
+    } catch (error) {
+        
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message:"login failure"
         })
     }
 }
