@@ -4,6 +4,8 @@ const app=express();
 
 require("dotenv").config()
 
+const cookieParser=require('cookie-parser')
+app.use(cookieParser());
 
 app.use(express.json())
 
