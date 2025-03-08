@@ -4,7 +4,7 @@ const mongoose=require('mongoose');
 require("dotenv").config();
 
 // this function is used to connect the database to our node
-const dbConnect=()=>{
+const dbConnect= async()=>{
 mongoose.connect(process.env.DATABASE_URL)
 .then(()=>{
     console.log("db connection is successfull")
