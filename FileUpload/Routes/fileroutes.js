@@ -6,12 +6,13 @@ const router=express.Router()
 
 // handeler  ko le ke aoo controller
 
-const{localFileUpload,imageUpload}=require('../Controllers/fileUpload')
+const{localFileUpload,imageUpload,videoUpload}=require('../Controllers/fileUpload')
 
 
 // api routes
 
 router.post("/localfileupload",localFileUpload)
 router.post("/imageupload",imageUpload)
+router.post('/videoupload',videoUpload)
 
 module.exports=router 
